@@ -1,0 +1,56 @@
+{
+  "displayFieldName":"",
+  "fieldAliases":{
+    "FID":"FID",
+    "Id":"Id",
+    "Nombre":"Nombre",
+    "Descripcio":"Descripcio"
+  },
+  "geometryType":"esriGeometryPoint",
+  "spatialReference":{
+    "wkid":32719,
+    "latestWkid":32719
+  },
+  "fields":[{
+    "name":"FID",
+    "type":"esriFieldTypeOID",
+    "alias":"FID"
+  },{
+    "name":"Id",
+    "type":"esriFieldTypeInteger",
+    "alias":"Id"
+  },{
+    "name":"Nombre",
+    "type":"esriFieldTypeString",
+    "alias":"Nombre",
+    "length":50
+  },{
+    "name":"Descripcio",
+    "type":"esriFieldTypeString",
+    "alias":"Descripcio",
+    "length":200
+  }],
+  "features":[{
+    "attributes":{
+      "FID":0,
+      "Id":0,
+      "Nombre":"Poste 1",
+      "Descripcio":"Poste de 3 metros cemento"
+    },
+    "geometry":{
+      "x":-17.39403351997647, 
+      "y":-66.154664207608
+    }
+  },{
+    "attributes":{
+      "FID":1,
+      "Id":0,
+      "Nombre":"Poste de 3 mts",
+      "Descripcio":"Poste metalico"
+    },
+    "geometry":{
+      "x":-17.39419770184195, 
+      "y": -66.15690563047097
+    }
+  }]
+}
