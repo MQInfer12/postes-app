@@ -6,8 +6,12 @@ import MapComponent from "./components/map";
 import { MarkerPositionType } from "./interfaces/map";
 import Form from "./components/form";
 import useGetDirection from "./hooks/useGetDirection";
-
+import postesJSON from "./data/postesJSON.json";
+import { FeatureType } from "./interfaces/geojson";
 function App() {
+  //============ POSTES JSON ============
+  const postesData: FeatureType[] = postesJSON.features;
+
   const { latitude, longitude } = useGetDirection();
 
   const [markerPosition, setMarkerPosition] = useState<MarkerPositionType>({
@@ -39,6 +43,7 @@ function App() {
         handleOpenForm={handleOpenForm}
         latitude={latitude}
         longitude={longitude}
+        postesData={postesData}
       />
 
       {openForm && (

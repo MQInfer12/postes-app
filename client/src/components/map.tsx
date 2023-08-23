@@ -10,12 +10,15 @@ import { useRef, useState } from "react";
 import { MarkerPositionType } from "../interfaces/map";
 import L from "leaflet";
 import Icon from "../assets/location.png";
+import IconPole from "../assets/poles.png";
+import { FeatureType } from "../interfaces/geojson";
 
 interface Params {
   changePosition: (newPos: MarkerPositionType) => void;
   handleOpenForm: () => void;
   latitude: number;
   longitude: number;
+  postesData: FeatureType[];
 }
 
 interface LocationMarkerParams {
@@ -26,11 +29,21 @@ function GetIcon(_iconSize: number) {
   return L.icon({
     iconUrl: Icon,
     iconSize: [_iconSize, _iconSize],
+    iconAnchor: [20, 45],
+  });
+}
+
+function GetIconPole(_iconSize: number) {
+  return L.icon({
+    iconUrl: IconPole,
+    iconSize: [_iconSize, _iconSize],
+    iconAnchor: [20, 45],
   });
 }
 
 function MapComponent(params: Params) {
-  const { changePosition, handleOpenForm, latitude, longitude } = params;
+  const { changePosition, handleOpenForm, latitude, longitude, postesData } =
+    params;
 
   const LocationMarker = ({ handleClick }: LocationMarkerParams) => {
     useMapEvents({
@@ -98,6 +111,20 @@ function MapComponent(params: Params) {
           </Marker>
 
           <LocationMarker handleClick={handleGetLatLng} />
+
+          {/* ========= OTHER POLES =========*/}
+          {postesData.map((v, i) => (
+            <Marker
+              key={i}
+              position={[v.geometry.x, v.geometry.y]}
+              eventHandlers={{
+                click: () => {
+                  alert(v.attributes.Nombre);
+                },
+              }}
+              icon={GetIconPole(28)}
+            />
+          ))}
         </MapContainer>
       )}
     </>

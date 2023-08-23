@@ -1,40 +1,41 @@
-import { HTMLInputTypeAttribute, useState } from 'react';
-import data from '../data/postesJSON.json';
-import './form.css';
-import { MarkerPositionType } from '../interfaces/map';
+import { HTMLInputTypeAttribute, useState } from "react";
+import data from "../data/postesJSON.json";
+import "./form.css";
+import { MarkerPositionType } from "../interfaces/map";
+import { GeoJsonType } from "../interfaces/geojson";
 
 interface Field {
-  name: string
-  alias: string
-  type: "esriFieldTypeOID" | "esriFieldTypeInteger" | "esriFieldTypeString"
-  length?: number
+  name: string;
+  alias: string;
+  type: "esriFieldTypeOID" | "esriFieldTypeInteger" | "esriFieldTypeString";
+  length?: number;
 }
 
 const INPUTTYPES: Record<Field["type"], HTMLInputTypeAttribute | undefined> = {
   esriFieldTypeInteger: "number",
   esriFieldTypeString: "text",
-  esriFieldTypeOID: undefined
-}
+  esriFieldTypeOID: undefined,
+};
 
 interface Props {
-  coords: MarkerPositionType
+  coords: MarkerPositionType;
 }
 
 const Form = ({ coords }: Props) => {
-  const [jsonData, setJsonData] = useState<any>({});
+  const [jsonData, setJsonData] = useState({} as GeoJsonType);
 
   const fields: Field[] = data.fields as Field[];
 
-  const allTheRefs: Record<string, HTMLInputElement | null> = {}
+  const allTheRefs: Record<string, HTMLInputElement | null> = {};
 
   const handleSend = () => {
-    let values: Record<string, string | number | undefined> = {};
+    const values: Record<string, string | number | undefined> = {};
     console.log(jsonData.features.length);
-    fields.forEach(field => {
-      if(field) {
-        if(!(field.type === "esriFieldTypeOID")) {
+    fields.forEach((field) => {
+      if (field) {
+        if (!(field.type === "esriFieldTypeOID")) {
           values[field.name] = allTheRefs[field.name]?.value;
-          if(field.type === "esriFieldTypeInteger") {
+          if (field.type === "esriFieldTypeInteger") {
             values[field.name] = Number(values[field.name]);
           }
         } else {
@@ -44,23 +45,23 @@ const Form = ({ coords }: Props) => {
     });
     const newValue = {
       attributes: {
-        ...values
+        ...values,
       },
       geometry: {
         x: coords?.lat,
-        y: coords?.lng
-      }
-    }
-    setJsonData((old: any) => ({
+        y: coords?.lng,
+      },
+    };
+    setJsonData((old: GeoJsonType) => ({
       ...old,
-      features: [...old.features, newValue]
+      features: [...old.features, newValue],
     }));
     alert("Nuevo dato añadido: " + JSON.stringify(newValue));
-  }
+  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
-    if (file){
+    if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
         const content = e.target?.result;
@@ -70,26 +71,26 @@ const Form = ({ coords }: Props) => {
     }
   };
 
-  console.log(jsonData);
-
   return (
-    <div className='form-container'>
+    <div className="form-container">
       <input type="file" onChange={handleFileChange} />
-      {fields.map((field, i) => (
-        INPUTTYPES[field.type] &&
-        <div className='form-inputcontainer' key={i}>
-          <p>{field.name}</p>
-          <input 
-            className='form-input'
-            type={INPUTTYPES[field.type]} 
-            name={field.name}
-            ref={ref => allTheRefs[field.name] = ref}
-          />
-        </div>
-      ))}
+      {fields.map(
+        (field, i) =>
+          INPUTTYPES[field.type] && (
+            <div className="form-inputcontainer" key={i}>
+              <p>{field.name}</p>
+              <input
+                className="form-input"
+                type={INPUTTYPES[field.type]}
+                name={field.name}
+                ref={(ref) => (allTheRefs[field.name] = ref)}
+              />
+            </div>
+          )
+      )}
       <button onClick={handleSend}>Añadir</button>
     </div>
-  )
-}
+  );
+};
 
-export default Form
+export default Form;
