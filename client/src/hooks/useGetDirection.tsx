@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 const useGetDirection = () => {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Check if the Geolocation API is available in the browser
@@ -19,15 +18,12 @@ const useGetDirection = () => {
     } else {
       alert("La geolocalizacion no esta disponible en tu buscador.");
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+
   }, []);
 
   return {
     latitude,
     longitude,
-    loading,
   };
 };
 

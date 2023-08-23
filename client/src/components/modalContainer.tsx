@@ -6,14 +6,14 @@ interface Props {
   cerrar: () => void
 }
 
-const ModalContainer = ({ title, children }: Props) => {
+const ModalContainer = ({ title, children, cerrar }: Props) => {
   return (
     <div className='modalContainer-all'>
       <div className='modalContainer-bg' />
       <div className='modalContainer-container'>
         <div className='modalContainer-titleContainer'>
           <p>{title}</p>
-          <button>Cerrar</button>
+          <button onClick={cerrar}>Cerrar</button>
         </div>
         { children }
       </div>

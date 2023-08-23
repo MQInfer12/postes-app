@@ -7,3 +7,12 @@
 .form-inputcontainer {
   width: 100%;
 }
+
+.form-inputcontainer > p {
+  font-weight: 600;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px 16px;
+}
