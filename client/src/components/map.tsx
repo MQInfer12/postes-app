@@ -6,7 +6,6 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import useGetDirection from "../hooks/useGetDirection";
 import { useRef, useState } from "react";
 import { MarkerPositionType } from "../interfaces/map";
 import L from "leaflet";
