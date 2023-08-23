@@ -25,6 +25,7 @@ const Form = () => {
         <div className='form-inputcontainer' key={i}>
           <p>{field.name}</p>
           <input 
+            className='form-input'
             type={INPUTTYPES[field.type]} 
           />
         </div>

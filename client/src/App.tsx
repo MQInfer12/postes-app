@@ -30,7 +30,7 @@ function App() {
           title="Añadir punto"
           cerrar={() => {}}
         >
-          <div>Hola mundo</div>
+          <Form />
         </ModalContainer>
       )}
     </>
