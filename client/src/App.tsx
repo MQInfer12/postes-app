@@ -7,8 +7,10 @@ import { MarkerPositionType } from "./interfaces/map";
 import Form from "./components/form";
 
 function App() {
-  const [markerPosition, setMarkerPosition] =
-    useState<MarkerPositionType | null>(null);
+  const [markerPosition, setMarkerPosition] = useState<MarkerPositionType>({
+    lat: -17.372161106503683,
+    lng: -66.16416468552735,
+  });
 
   const [openForm, setOpenForm] = useState(false);
 
@@ -22,21 +24,18 @@ function App() {
 
   return (
     <>
-      <h2>{markerPosition && markerPosition.lat}</h2>
-      <MapComponent changePosition={changePosition} handleOpenForm={handleOpenForm}/>
+      <MapComponent
+        changePosition={changePosition}
+        handleOpenForm={handleOpenForm}
+      />
 
       {openForm && (
-        <ModalContainer
-          title="Añadir punto"
-          cerrar={handleOpenForm}
-        >
-          <Form 
-            coords={markerPosition}
-          />
+        <ModalContainer title="Añadir punto" cerrar={handleOpenForm}>
+          <Form coords={markerPosition} />
         </ModalContainer>
       )}
     </>
   );
 }
 
-export default App
+export default App;

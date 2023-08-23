@@ -35,7 +35,7 @@ function MapComponent({ changePosition, handleOpenForm }: Params) {
   const handleGetLatLng = (e: any) => {
     const { lat, lng } = e.latlng;
     setMarkerPosition({ lat, lng });
-    console.log({ lat, lng });
+
     changePosition({ lat, lng });
   };
 
@@ -47,25 +47,21 @@ function MapComponent({ changePosition, handleOpenForm }: Params) {
     const marker: any = markerRef.current;
     if (marker != null) {
       const { lat, lng } = marker.getLatLng();
-      console.log("New position:", lat, lng);
+
       setMarkerPosition({ lat, lng });
       changePosition({ lat, lng });
     }
   };
 
-  const lat = "-17.372161106503683";
-  const lng = "-66.16416468552735";
+  const lat = -17.372161106503683;
+  const lng = -66.16416468552735;
 
   return (
     <>
       {!loading && (
         <MapContainer
           className={"map"}
-          center={
-            markerPosition
-              ? [markerPosition.lat, markerPosition.lng]
-              : [lat, lng]
-          }
+          center={latitude ? [latitude, longitude] : [lat, lng]}
           zoom={13}
           zoomControl={true}
         >

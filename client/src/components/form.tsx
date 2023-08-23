@@ -17,7 +17,7 @@ const INPUTTYPES: Record<Field["type"], "number" | HTMLInputTypeAttribute | unde
 }
 
 interface Props {
-  coords: MarkerPositionType | null
+  coords: MarkerPositionType
 }
 
 const Form = ({ coords }: Props) => {
