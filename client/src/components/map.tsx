@@ -9,18 +9,29 @@ import "leaflet/dist/leaflet.css";
 import useGetDirection from "../hooks/useGetDirection";
 import { useRef, useState } from "react";
 import { MarkerPositionType } from "../interfaces/map";
+import L from "leaflet";
+import Icon from "../assets/location.png";
 
 interface Params {
   changePosition: (newPos: MarkerPositionType) => void;
   handleOpenForm: () => void;
+  latitude: number;
+  longitude: number;
 }
 
 interface LocationMarkerParams {
   handleClick: (e: any) => void;
 }
 
-function MapComponent({ changePosition, handleOpenForm }: Params) {
-  const { latitude, loading, longitude } = useGetDirection();
+function GetIcon(_iconSize: number) {
+  return L.icon({
+    iconUrl: Icon,
+    iconSize: [_iconSize, _iconSize],
+  });
+}
+
+function MapComponent(params: Params) {
+  const { changePosition, handleOpenForm, latitude, longitude } = params;
 
   const LocationMarker = ({ handleClick }: LocationMarkerParams) => {
     useMapEvents({
@@ -35,7 +46,6 @@ function MapComponent({ changePosition, handleOpenForm }: Params) {
   const handleGetLatLng = (e: any) => {
     const { lat, lng } = e.latlng;
     setMarkerPosition({ lat, lng });
-
     changePosition({ lat, lng });
   };
 
@@ -53,15 +63,12 @@ function MapComponent({ changePosition, handleOpenForm }: Params) {
     }
   };
 
-  const lat = -17.372161106503683;
-  const lng = -66.16416468552735;
-
   return (
     <>
-      {!loading && (
+      {latitude != 0 && (
         <MapContainer
           className={"map"}
-          center={latitude ? [latitude, longitude] : [lat, lng]}
+          center={[latitude, longitude]}
           zoom={13}
           zoomControl={true}
         >
@@ -74,7 +81,7 @@ function MapComponent({ changePosition, handleOpenForm }: Params) {
             position={
               markerPosition
                 ? [markerPosition.lat, markerPosition.lng]
-                : [lat, lng]
+                : [latitude, longitude]
             }
             draggable={true}
             autoPan={true}
@@ -84,6 +91,7 @@ function MapComponent({ changePosition, handleOpenForm }: Params) {
             eventHandlers={{
               dragend: () => handleMarkerDragEnd(),
             }}
+            icon={GetIcon(50)}
           >
             <Popup>
               <p onClick={handleOpenForm}> Clic Aqui para añadir datos</p>
