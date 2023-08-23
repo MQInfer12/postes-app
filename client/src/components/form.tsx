@@ -1,5 +1,6 @@
 import { HTMLInputTypeAttribute } from 'react';
 import data from '../data/postesJSON.json';
+import './form.css';
 
 interface Field {
   name: string
@@ -18,10 +19,10 @@ const Form = () => {
   const fields: Field[] = data.fields as Field[];
 
   return (
-    <div>
+    <div className='form-container'>
       {fields.map((field, i) => (
         INPUTTYPES[field.type] &&
-        <div key={i}>
+        <div className='form-inputcontainer' key={i}>
           <p>{field.name}</p>
           <input 
             type={INPUTTYPES[field.type]} 

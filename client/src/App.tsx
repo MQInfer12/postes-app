@@ -18,15 +18,12 @@ function App() {
     <>
       <h2>{markerPosition && markerPosition.lat}</h2>
       <MapComponent changePosition={changePosition} />
-
-      
-        <ModalContainer
-          title="Añadir punto"
-          cerrar={() => {}}
-        >
-          <Form />
-        </ModalContainer>
-      
+      <ModalContainer
+        title="Añadir punto"
+        cerrar={() => {}}
+      >
+        <Form />
+      </ModalContainer>
     </>
   );
 }
