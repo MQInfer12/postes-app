@@ -9,16 +9,22 @@ function App() {
   const [markerPosition, setMarkerPosition] =
     useState<MarkerPositionType | null>(null);
 
+  const [openForm, setOpenForm] = useState(false);
+
   const changePosition = (newPos: MarkerPositionType) => {
     setMarkerPosition(newPos);
+  };
+
+  const handleOpenForm = () => {
+    setOpenForm(!openForm);
   };
 
   return (
     <>
       <h2>{markerPosition && markerPosition.lat}</h2>
-      <MapComponent changePosition={changePosition} />
+      <MapComponent changePosition={changePosition} handleOpenForm={handleOpenForm}/>
 
-      {/*       {openForm && (
+      {openForm && (
         <ModalContainer
           title="Añadir punto"
           cerrar={() => {}}
@@ -26,7 +32,7 @@ function App() {
         >
           <div>Hola mundo</div>
         </ModalContainer>
-      )}  */}
+      )}
     </>
   );
 }

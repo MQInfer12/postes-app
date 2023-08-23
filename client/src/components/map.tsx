@@ -12,13 +12,14 @@ import { MarkerPositionType } from "../interfaces/map";
 
 interface Params {
   changePosition: (newPos: MarkerPositionType) => void;
+  handleOpenForm: () => void;
 }
 
 interface LocationMarkerParams {
   handleClick: (e: any) => void;
 }
 
-function MapComponent({ changePosition }: Params) {
+function MapComponent({ changePosition, handleOpenForm }: Params) {
   const { latitude, loading, longitude } = useGetDirection();
 
   const LocationMarker = ({ handleClick }: LocationMarkerParams) => {
@@ -60,7 +61,11 @@ function MapComponent({ changePosition }: Params) {
       {!loading && (
         <MapContainer
           className={"map"}
-          center={[latitude, longitude]}
+          center={
+            markerPosition
+              ? [markerPosition.lat, markerPosition.lng]
+              : [lat, lng]
+          }
           zoom={13}
           zoomControl={true}
         >
@@ -84,7 +89,9 @@ function MapComponent({ changePosition }: Params) {
               dragend: () => handleMarkerDragEnd(),
             }}
           >
-            <Popup>"Click here to make marker draggable"</Popup>
+            <Popup>
+              <p onClick={handleOpenForm}> Clic Aqui para añadir datos</p>
+            </Popup>
           </Marker>
 
           <LocationMarker handleClick={handleGetLatLng} />
