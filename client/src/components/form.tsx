@@ -1,6 +1,10 @@
 import { HTMLInputTypeAttribute } from 'react';
 import data from '../data/postesJSON.json';
 import './form.css';
+import React, {useState} from 'react';
+
+
+
 
 interface Field {
   name: string
@@ -18,6 +22,22 @@ const INPUTTYPES: Record<Field["type"], "number" | HTMLInputTypeAttribute | unde
 const Form = () => {
   const fields: Field[] = data.fields as Field[];
 
+  const [fileContent, setFileContent] = useState({});
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file){
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const content = e.target?.result;
+        setFileContent(JSON.parse(content as string));
+        console.log(JSON.parse(content as string))
+      };
+      reader.readAsText(file);
+    }
+  };
+
+
   return (
     <div className='form-container'>
       {fields.map((field, i) => (
@@ -31,6 +51,11 @@ const Form = () => {
         </div>
       ))}
       <button>Añadir</button>
+      <input type="file" onChange={handleFileChange} />
+      <div>
+        <h2>File Content:</h2>
+        
+      </div>
     </div>
   )
 }
