@@ -10,11 +10,6 @@ interface Field {
   length?: number
 }
 
-interface InputProps {
-  type: HTMLInputTypeAttribute | undefined
-  initialState?: 0 | ""
-}
-
 const INPUTTYPES: Record<Field["type"], HTMLInputTypeAttribute | undefined> = {
   esriFieldTypeInteger: "number",
   esriFieldTypeString: "text",
@@ -26,21 +21,27 @@ interface Props {
 }
 
 const Form = ({ coords }: Props) => {
+  const [jsonData, setJsonData] = useState<any>({});
+
   const fields: Field[] = data.fields as Field[];
 
   const allTheRefs: Record<string, HTMLInputElement | null> = {}
 
   const handleSend = () => {
     let values: Record<string, string | number | undefined> = {};
-    for (const [key, value] of Object.entries(allTheRefs)) {
-      const field = fields.find(field => field.name === key);
-      if(field?.type) {
-        values[key] = value?.value;
-        if(field?.type === "esriFieldTypeInteger") {
-          values[key] = Number(values[key]);
+    console.log(jsonData.features.length);
+    fields.forEach(field => {
+      if(field) {
+        if(!(field.type === "esriFieldTypeOID")) {
+          values[field.name] = allTheRefs[field.name]?.value;
+          if(field.type === "esriFieldTypeInteger") {
+            values[field.name] = Number(values[field.name]);
+          }
+        } else {
+          values[field.name] = jsonData.features.length;
         }
       }
-    }
+    });
     const newValue = {
       attributes: {
         ...values
@@ -50,27 +51,29 @@ const Form = ({ coords }: Props) => {
         y: coords?.lng
       }
     }
-    console.log(newValue);
+    setJsonData((old: any) => ({
+      ...old,
+      features: [...old.features, newValue]
+    }));
+    alert("Nuevo dato añadido: " + JSON.stringify(newValue));
   }
 
-  const [fileContent, setFileContent] = useState({});
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     if (file){
       const reader = new FileReader();
-
       reader.onload = (e) => {
         const content = e.target?.result;
-        setFileContent(JSON.parse(content as string));
-        console.log(JSON.parse(content as string))
+        setJsonData(JSON.parse(content as string));
       };
       reader.readAsText(file);
     }
   };
 
+  console.log(jsonData);
+
   return (
     <div className='form-container'>
-      <button>Añadir</button>
       <input type="file" onChange={handleFileChange} />
       {fields.map((field, i) => (
         INPUTTYPES[field.type] &&
