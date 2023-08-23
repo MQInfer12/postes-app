@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute, useRef, useState } from 'react';
+import { HTMLInputTypeAttribute, useState } from 'react';
 import data from '../data/postesJSON.json';
 import './form.css';
 import { MarkerPositionType } from '../interfaces/map';
@@ -22,7 +22,7 @@ const INPUTTYPES: Record<Field["type"], HTMLInputTypeAttribute | undefined> = {
 }
 
 interface Props {
-  coords: MarkerPositionType | null
+  coords: MarkerPositionType
 }
 
 const Form = ({ coords }: Props) => {
@@ -53,8 +53,25 @@ const Form = ({ coords }: Props) => {
     console.log(newValue);
   }
 
+  const [fileContent, setFileContent] = useState({});
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file){
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const content = e.target?.result;
+        setFileContent(JSON.parse(content as string));
+        console.log(JSON.parse(content as string))
+      };
+      reader.readAsText(file);
+    }
+  };
+
   return (
     <div className='form-container'>
+      <button>Añadir</button>
+      <input type="file" onChange={handleFileChange} />
       {fields.map((field, i) => (
         INPUTTYPES[field.type] &&
         <div className='form-inputcontainer' key={i}>

@@ -1,14 +1,26 @@
 import "leaflet/dist/leaflet.css";
 import ModalContainer from "./components/modalContainer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
 import MapComponent from "./components/map";
 import { MarkerPositionType } from "./interfaces/map";
 import Form from "./components/form";
+import useGetDirection from "./hooks/useGetDirection";
 
 function App() {
-  const [markerPosition, setMarkerPosition] =
-    useState<MarkerPositionType | null>(null);
+  const { latitude, longitude } = useGetDirection();
+
+  const [markerPosition, setMarkerPosition] = useState<MarkerPositionType>({
+    lat: 0,
+    lng: 0,
+  });
+
+  useEffect(() => {
+    setMarkerPosition({
+      lat: latitude,
+      lng: longitude,
+    });
+  }, [latitude, longitude]);
 
   const [openForm, setOpenForm] = useState(false);
 
@@ -22,21 +34,20 @@ function App() {
 
   return (
     <>
-      <h2>{markerPosition && markerPosition.lat}</h2>
-      <MapComponent changePosition={changePosition} handleOpenForm={handleOpenForm}/>
+      <MapComponent
+        changePosition={changePosition}
+        handleOpenForm={handleOpenForm}
+        latitude={latitude}
+        longitude={longitude}
+      />
 
       {openForm && (
-        <ModalContainer
-          title="Añadir punto"
-          cerrar={handleOpenForm}
-        >
-          <Form 
-            coords={markerPosition}
-          />
+        <ModalContainer title="Añadir punto" cerrar={handleOpenForm}>
+          <Form coords={markerPosition} />
         </ModalContainer>
       )}
     </>
   );
 }
 
-export default App
+export default App;
