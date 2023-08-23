@@ -1,6 +1,7 @@
 import { HTMLInputTypeAttribute } from 'react';
 import data from '../data/postesJSON.json';
 import './form.css';
+import { MarkerPositionType } from '../interfaces/map';
 
 interface Field {
   name: string
@@ -15,9 +16,14 @@ const INPUTTYPES: Record<Field["type"], "number" | HTMLInputTypeAttribute | unde
   esriFieldTypeOID: undefined
 }
 
-const Form = () => {
+interface Props {
+  coords: MarkerPositionType | null
+}
+
+const Form = ({ coords }: Props) => {
   const fields: Field[] = data.fields as Field[];
 
+  console.log(coords);
   return (
     <div className='form-container'>
       {fields.map((field, i) => (

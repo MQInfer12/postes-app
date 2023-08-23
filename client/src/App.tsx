@@ -30,7 +30,9 @@ function App() {
           title="Añadir punto"
           cerrar={handleOpenForm}
         >
-          <Form />
+          <Form 
+            coords={markerPosition}
+          />
         </ModalContainer>
       )}
     </>
