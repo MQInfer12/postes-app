@@ -28,7 +28,7 @@ function App() {
       {openForm && (
         <ModalContainer
           title="Añadir punto"
-          cerrar={() => {}}
+          cerrar={handleOpenForm}
         >
           <Form />
         </ModalContainer>
