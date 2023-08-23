@@ -1,18 +1,22 @@
 .modalContainer-all {
+  position: fixed;
+  width: 100vw;
+  height: 100dvh;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
   isolation: isolate;
 }
 
 .modalContainer-bg {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100dvh;
-  background-color: rgba(0, 0, 0, 0.4);
+  inset: 0;
 }
 
 .modalContainer-container {
   z-index: 1;
+  background-color: white;
+  padding: 20px;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -23,4 +27,5 @@
 .modalContainer-titleContainer {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
