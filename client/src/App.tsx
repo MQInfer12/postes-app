@@ -3,11 +3,12 @@ import 'leaflet/dist/leaflet.css'
 import ModalContainer from './components/modalContainer'
 import { useState } from 'react'
 import { LatLngExpression } from 'leaflet';
+import Form from './components/form';
 
 function App() {
   const center: LatLngExpression = [-17.39481762066563, -66.1594660433327];
   const [selectedCoords, setSelectedCoords] = useState<LatLngExpression>(center);
-  const [openForm, setOpenForm] = useState();
+  const [openForm, setOpenForm] = useState(true);
 
   return (
     <>
@@ -20,24 +21,13 @@ function App() {
         openForm &&
         <ModalContainer 
           title='Añadir punto' 
-          cerrar={() => {}}
-          coords={selectedCoords}
+          cerrar={() => setOpenForm(false)}
         >
-          <div>Hola mundo</div>
+          <Form />
         </ModalContainer>
       }
     </>
   )
-}
-
-const LocationFinder = () => {
-  useMapEvents({
-    click(e) {
-      console.log(e.latlng);
-    }
-  });
-
-  return null;
 }
 
 export default App

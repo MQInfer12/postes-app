@@ -1,11 +1,9 @@
-import { LatLngExpression } from 'leaflet'
 import './modalContainer.css'
 
 interface Props {
   title: string
   children: JSX.Element
   cerrar: () => void
-  coords: LatLngExpression
 }
 
 const ModalContainer = ({ title, children }: Props) => {
