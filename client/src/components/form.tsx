@@ -2,15 +2,9 @@ import { HTMLInputTypeAttribute, useState } from "react";
 import data from "../data/postesJSON.json";
 import "./form.css";
 import { MarkerPositionType } from "../interfaces/map";
-import { GeoJsonType } from "../interfaces/geojson";
+import { Attributes, Feature, Field, GeoJsonType } from "../interfaces/geojson";
 import Button from "./button";
 
-interface Field {
-  name: string;
-  alias: string;
-  type: "esriFieldTypeOID" | "esriFieldTypeInteger" | "esriFieldTypeString";
-  length?: number;
-}
 
 const INPUTTYPES: Record<Field["type"], HTMLInputTypeAttribute | undefined> = {
   esriFieldTypeInteger: "number",
@@ -30,8 +24,7 @@ const Form = ({ coords }: Props) => {
   const allTheRefs: Record<string, HTMLInputElement | null> = {};
 
   const handleSend = () => {
-    const values: Record<string, string | number | undefined> = {};
-    console.log(jsonData.features.length);
+    const values: Attributes = {};
     fields.forEach((field) => {
       if (field) {
         if (!(field.type === "esriFieldTypeOID")) {
@@ -44,7 +37,7 @@ const Form = ({ coords }: Props) => {
         }
       }
     });
-    const newValue = {
+    const newValue: Feature = {
       attributes: {
         ...values,
       },
