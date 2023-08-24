@@ -1,10 +1,45 @@
+@font-face {
+  font-family: Arciform;
+  src: url("./assets/Arciform.otf") format("truetype");
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arciform;
+  letter-spacing: 1px;
+  --green: #009877;
 }
 
 .map {
   height: 100dvh;
   width: 100vw;
+}
+
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  cursor: pointer;
+}
+
+.leaflet-popup-close-button {
+  display: none;
+}
+
+.button {
+  padding: 8px 12px;
+  background-color: var(--green);
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  font-size: 1.1rem;
+  border-radius: 4px;
+}
+
+#logoprincipal {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 120px;
+  z-index: 1000;
 }

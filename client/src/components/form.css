@@ -6,13 +6,23 @@
 
 .form-inputcontainer {
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-inputcontainer > p {
   font-weight: 600;
+  opacity: 0.9;
+  font-size: 1.1rem;
+  padding-left: 8px;
 }
 
 .form-input {
   width: 100%;
-  padding: 8px 16px;
+  padding: 8px;
+  color: rgba(0, 0, 0, 0.6);
+  outline: none;
+  border: none;
+  border-bottom: 1px solid var(--green);
+  font-size: 1.1rem;
 }

@@ -3,6 +3,7 @@ import data from "../data/postesJSON.json";
 import "./form.css";
 import { MarkerPositionType } from "../interfaces/map";
 import { GeoJsonType } from "../interfaces/geojson";
+import Button from "./button";
 
 interface Field {
   name: string;
@@ -88,7 +89,7 @@ const Form = ({ coords }: Props) => {
             </div>
           )
       )}
-      <button onClick={handleSend}>Añadir</button>
+      <Button onClick={handleSend}>Añadir</Button>
     </div>
   );
 };
