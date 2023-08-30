@@ -20,6 +20,7 @@ interface Params {
   latitude: number;
   longitude: number;
   postesData: FeatureType[];
+  useMyLocation: boolean;
 }
 
 interface LocationMarkerParams {
@@ -48,7 +49,7 @@ function GetIconPole(_iconWidth: number, _iconHeight: number, divide: number) {
 }
 
 function MapComponent(params: Params) {
-  const { changePosition, handleOpenForm, latitude, longitude, postesData } =
+  const { changePosition, handleOpenForm, latitude, longitude, postesData, useMyLocation } =
     params;
 
   const LocationMarker = ({ handleClick }: LocationMarkerParams) => {
@@ -97,11 +98,13 @@ function MapComponent(params: Params) {
 
           <Marker
             position={
-              markerPosition
-                ? [markerPosition.lat, markerPosition.lng]
-                : [latitude, longitude]
+              !useMyLocation ? 
+                markerPosition
+                  ? [markerPosition.lat, markerPosition.lng]
+                  : [latitude, longitude] : 
+                [latitude, longitude]
             }
-            draggable={true}
+            draggable={!useMyLocation}
             autoPan={true}
             /*
       // @ts-ignore */

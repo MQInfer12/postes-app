@@ -9,12 +9,14 @@ import useGetDirection from "../hooks/useGetDirection";
 import postesJSON from "../data/postesJSON.json";
 import { FeatureType } from "../interfaces/geojson";
 import LogoCocha from '../assets/logococha.png'
+import './map.css';
 
 function Map() {
   //============ POSTES JSON ============
   const postesData: FeatureType[] = postesJSON.features;
 
-  const { latitude, longitude } = useGetDirection();
+  const [useMyLocation, setUseMyLocation] = useState(true);
+  const { latitude, longitude } = useGetDirection(useMyLocation);
 
   const [markerPosition, setMarkerPosition] = useState<MarkerPositionType>({
     lat: 0,
@@ -46,11 +48,22 @@ function Map() {
         latitude={latitude}
         longitude={longitude}
         postesData={postesData}
+        useMyLocation={useMyLocation}
       />
+      {
+        latitude !== 0 &&
+        <button 
+          onClick={() => setUseMyLocation(old => !old)}
+          className="mylocationbutton"
+        >{useMyLocation ? "Mi ubicacion" : "Manual"}</button>
+      }
 
       {openForm && (
         <ModalContainer title="Añadir punto" cerrar={handleOpenForm}>
-          <Form coords={markerPosition} />
+          <Form coords={useMyLocation ? {
+            lat: latitude,
+            lng: longitude
+          } : markerPosition} />
         </ModalContainer>
       )}
       <img id="logoprincipal" src={LogoCocha} />

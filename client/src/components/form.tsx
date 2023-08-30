@@ -53,21 +53,8 @@ const Form = ({ coords }: Props) => {
     alert("Nuevo dato añadido: " + JSON.stringify(newValue));
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const content = e.target?.result;
-        setJsonData(JSON.parse(content as string));
-      };
-      reader.readAsText(file);
-    }
-  };
-
   return (
     <div className="form-container">
-      <input type="file" onChange={handleFileChange} />
       {fields.map(
         (field, i) =>
           INPUTTYPES[field.type] && (
