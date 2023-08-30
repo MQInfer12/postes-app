@@ -12,6 +12,7 @@ import L from "leaflet";
 import Icon from "../assets/location.png";
 import IconPole from "../assets/poles.png";
 import { FeatureType } from "../interfaces/geojson";
+import Button from "./button";
 
 interface Params {
   changePosition: (newPos: MarkerPositionType) => void;
@@ -25,19 +26,24 @@ interface LocationMarkerParams {
   handleClick: (e: any) => void;
 }
 
-function GetIcon(_iconSize: number) {
+function GetIcon(_iconWidth: number, _iconHeight: number, divide: number) {
+  _iconWidth = _iconWidth / divide;
+  _iconHeight = _iconHeight / divide;
   return L.icon({
     iconUrl: Icon,
-    iconSize: [_iconSize, _iconSize],
-    iconAnchor: [20, 45],
+    iconSize: [_iconWidth, _iconHeight],
+    iconAnchor: [_iconWidth / 2, _iconHeight],
+    popupAnchor: [0, -_iconHeight + 10]
   });
 }
 
-function GetIconPole(_iconSize: number) {
+function GetIconPole(_iconWidth: number, _iconHeight: number, divide: number) {
+  _iconWidth = _iconWidth / divide;
+  _iconHeight = _iconHeight / divide;
   return L.icon({
     iconUrl: IconPole,
-    iconSize: [_iconSize, _iconSize],
-    iconAnchor: [20, 45],
+    iconSize: [_iconWidth, _iconHeight],
+    iconAnchor: [_iconWidth / 2, _iconHeight - 2],
   });
 }
 
@@ -69,7 +75,6 @@ function MapComponent(params: Params) {
     const marker: any = markerRef.current;
     if (marker != null) {
       const { lat, lng } = marker.getLatLng();
-
       setMarkerPosition({ lat, lng });
       changePosition({ lat, lng });
     }
@@ -82,11 +87,12 @@ function MapComponent(params: Params) {
           className={"map"}
           center={[latitude, longitude]}
           zoom={13}
-          zoomControl={true}
+          zoomControl={false}
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            url='http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+            maxZoom={20}
+            subdomains={['mt0','mt1','mt2','mt3']}
           />
 
           <Marker
@@ -103,10 +109,10 @@ function MapComponent(params: Params) {
             eventHandlers={{
               dragend: () => handleMarkerDragEnd(),
             }}
-            icon={GetIcon(50)}
+            icon={GetIcon(57, 76, 2)}
           >
             <Popup>
-              <p onClick={handleOpenForm}> Clic Aqui para añadir datos</p>
+              <Button onClick={handleOpenForm}>Añadir datos</Button>
             </Popup>
           </Marker>
 
@@ -122,7 +128,7 @@ function MapComponent(params: Params) {
                   alert(v.attributes.Nombre);
                 },
               }}
-              icon={GetIconPole(28)}
+              icon={GetIconPole(86, 78, 2.5)}
             />
           ))}
         </MapContainer>

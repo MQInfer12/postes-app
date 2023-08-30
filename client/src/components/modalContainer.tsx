@@ -1,3 +1,4 @@
+import Button from './button'
 import './modalContainer.css'
 
 interface Props {
@@ -13,7 +14,7 @@ const ModalContainer = ({ title, children, cerrar }: Props) => {
       <div className='modalContainer-container'>
         <div className='modalContainer-titleContainer'>
           <p>{title}</p>
-          <button onClick={cerrar}>Cerrar</button>
+          <Button onClick={cerrar}>Cerrar</Button>
         </div>
         { children }
       </div>

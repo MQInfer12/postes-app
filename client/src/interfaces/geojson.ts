@@ -1,12 +1,3 @@
-export interface GeoJsonType {
-  displayFieldName: string;
-  fieldAliases: FieldAliases;
-  geometryType: string;
-  spatialReference: SpatialReference;
-  fields: Field[];
-  features: Feature[];
-}
-
 export interface FieldAliases {
   FID: string;
   Id: string;
@@ -31,14 +22,33 @@ export interface FeatureType {
   geometry: Geometry;
 }
 
-export interface Attributes {
-  FID: number;
-  Id: number;
-  Nombre: string;
-  Descripcio: string;
-}
-
 export interface Geometry {
   x: number;
   y: number;
+}
+
+export interface Field {
+  name: string;
+  alias: string;
+  type: "esriFieldTypeOID" | "esriFieldTypeInteger" | "esriFieldTypeString";
+  length?: number;
+}
+
+export type Attributes = Record<string, number | string | undefined>
+
+export interface Feature {
+  attributes: Attributes,
+  geometry: {
+    x: number,
+    y: number
+  }
+}
+
+export interface GeoJsonType {
+  displayFieldName: string;
+  fieldAliases: FieldAliases;
+  geometryType: string;
+  spatialReference: SpatialReference;
+  fields: Field[];
+  features: Feature[];
 }
