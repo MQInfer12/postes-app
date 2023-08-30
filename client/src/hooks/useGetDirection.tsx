@@ -9,7 +9,7 @@ const useGetDirection = (useMyLocation: boolean) => {
     window.addEventListener("message", (e) => {
       const res: Message = JSON.parse(e.data);
       const { type, data } = res;
-      if(type === "coords" && useMyLocation) {
+      if (type === "coords" && useMyLocation) {
         setLatitude(data.latitude);
         setLongitude(data.longitude);
       }
